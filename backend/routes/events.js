@@ -1,11 +1,11 @@
-const express = require('express');
+import express from 'express';
 
-const { getAll, get, add, replace, remove } = require('../data/event');
-const {
+import { getAll, get, add, replace, remove } from '../data/event.js';
+import {
   isValidText,
   isValidDate,
   isValidImageUrl,
-} = require('../util/validation');
+} from '../util/validation.js';
 
 const router = express.Router();
 
@@ -108,4 +108,4 @@ router.delete('/:id', async (req, res, next) => {
   }
 });
 
-module.exports = router;
+export default router;
