@@ -2,9 +2,6 @@
 import bodyParser from 'body-parser';
 import express from 'express';
 
-const bodyParser = require('body-parser');
-const express = require('express');
-
 const eventRoutes = require('./routes/events');
 
 const app = express();
