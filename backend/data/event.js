@@ -1,19 +1,17 @@
-const fs = require('node:fs/promises');
-
-const { v4: generateId } = require('uuid');
-
-const { NotFoundError } = require('../util/errors');
+import { readFile, writeFile } from 'node:fs/promises';
+import { v4 as generateId } from 'uuid';
+import { NotFoundError } from '../util/errors.js';
 
 async function readData() {
-  const data = await fs.readFile('events.json', 'utf8');
+  const data = await readFile('events.json', 'utf8');
   return JSON.parse(data);
 }
 
 async function writeData(data) {
-  await fs.writeFile('events.json', JSON.stringify(data));
+  await writeFile('events.json', JSON.stringify(data));
 }
 
-async function getAll() {
+export async function getAll() {
   const storedData = await readData();
   if (!storedData.events) {
     throw new NotFoundError('Could not find any events.');
@@ -21,7 +19,7 @@ async function getAll() {
   return storedData.events;
 }
 
-async function get(id) {
+export async function get(id) {
   const storedData = await readData();
   if (!storedData.events || storedData.events.length === 0) {
     throw new NotFoundError('Could not find any events.');
@@ -35,13 +33,13 @@ async function get(id) {
   return event;
 }
 
-async function add(data) {
+export async function add(data) {
   const storedData = await readData();
   storedData.events.unshift({ ...data, id: generateId() });
   await writeData(storedData);
 }
 
-async function replace(id, data) {
+export async function replace(id, data) {
   const storedData = await readData();
   if (!storedData.events || storedData.events.length === 0) {
     throw new NotFoundError('Could not find any events.');
@@ -57,14 +55,8 @@ async function replace(id, data) {
   await writeData(storedData);
 }
 
-async function remove(id) {
+export async function remove(id) {
   const storedData = await readData();
   const updatedData = storedData.events.filter((ev) => ev.id !== id);
-  await writeData({events: updatedData});
+  await writeData({ events: updatedData });
 }
-
-exports.getAll = getAll;
-exports.get = get;
-exports.add = add;
-exports.replace = replace;
-exports.remove = remove;
