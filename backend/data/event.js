@@ -1,5 +1,5 @@
 import { readFile, writeFile } from 'node:fs/promises';
-import { v4 as generateId } from 'uuid/dist/esm-browser/index.js';
+import { v4 as generateId } from 'uuid';
 import { NotFoundError } from '../util/errors.js';
 
 async function readData() {
