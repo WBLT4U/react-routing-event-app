@@ -93,11 +93,11 @@ export async function action({ request, params }) {
     description: data.get('description'),
   };
 
-  let url = 'http://localhost:8080/events';
+  let url = 'https://react-routing-event-app.onrender.com/events';
 
   if (method === 'PATCH') {
     const eventId = params.eventId;
-    url = 'http://localhost:8080/events/' + eventId;
+    url = 'https://react-routing-event-app.onrender.com/events/' + eventId;
   }
 
   const response = await fetch(url, {
